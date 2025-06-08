@@ -187,3 +187,36 @@ iconPulseStyle.textContent = `
     `;
 document.head.appendChild(iconPulseStyle);
 
+
+
+
+ // Animacja wejścia dla opcji kontaktu
+ const options = document.querySelectorAll('.contact-option');
+ options.forEach((option, index) => {
+     option.style.opacity = '0';
+     option.style.transform = 'translateY(30px)';
+     
+     setTimeout(() => {
+         option.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+         option.style.opacity = '1';
+         option.style.transform = 'translateY(0)';
+     }, index * 200 + 500);
+ });
+
+ // Efekt świetlny podążający za kursorem
+ document.addEventListener('mousemove', (e) => {
+     const contactSection = document.querySelector('.contact-section');
+     const rect = contactSection.getBoundingClientRect();
+     const x = ((e.clientX - rect.left) / rect.width) * 100;
+     const y = ((e.clientY - rect.top) / rect.height) * 100;
+     
+     contactSection.style.background = `
+         radial-gradient(circle at ${x}% ${y}%, 
+             rgba(255, 215, 0, 0.08) 0%, 
+             rgba(255, 215, 0, 0.03) 50%, 
+             rgba(255, 215, 0, 0.01) 100%)
+     `;
+ });
+
+
+
