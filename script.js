@@ -186,3 +186,4 @@ iconPulseStyle.textContent = `
         }
     `;
 document.head.appendChild(iconPulseStyle);
+
