@@ -104,8 +104,6 @@ body {
 	}
 }
 
-
-
 /* Hero Section */
 .hero {
 	min-height: 100vh;
@@ -844,267 +842,271 @@ body {
 	background: var(--accent-gold);
 }
 
-
-
-
 .contact {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
 }
 
 /* Mesh Background */
-.mesh-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-            circle at 20% 80%,
-            rgba(255, 215, 0, 0.12) 0%,
-            transparent 50%
-        ),
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(255, 247, 0, 0.08) 0%,
-            transparent 50%
-        ),
-        radial-gradient(
-            circle at 40% 40%,
-            rgba(205, 127, 50, 0.06) 0%,
-            transparent 50%
-        ),
-        radial-gradient(
-            circle at 60% 70%,
-            rgba(255, 215, 0, 0.04) 0%,
-            transparent 50%
-        );
-    z-index: -1;
-    animation: meshMove 25s ease-in-out infinite;
+/* .mesh-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(
+			circle at 20% 80%,
+			rgba(255, 215, 0, 0.12) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 80% 20%,
+			rgba(255, 247, 0, 0.08) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 40% 40%,
+			rgba(205, 127, 50, 0.06) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 60% 70%,
+			rgba(255, 215, 0, 0.04) 0%,
+			transparent 50%
+		);
+	z-index: -1;
+	animation: meshMove 25s ease-in-out infinite;
 }
 
 @keyframes meshMove {
-    0%, 100% {
-        transform: scale(1) rotate(0deg);
-    }
-    50% {
-        transform: scale(1.1) rotate(180deg);
-    }
-}
+	0%,
+	100% {
+		transform: scale(1) rotate(0deg);
+	}
+	50% {
+		transform: scale(1.1) rotate(180deg);
+	}
+} */
 
 .contact-section {
-    background: rgba(255, 215, 0, 0.03);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 215, 0, 0.1);
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: var(--shadow-dark);
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    animation: slideUp 1s ease-out both;
+	background: rgba(255, 215, 0, 0.03);
+	backdrop-filter: blur(20px);
+	border: 2px solid rgba(255, 215, 0, 0.1);
+	border-radius: 20px;
+	padding: 3rem;
+	box-shadow: var(--shadow-dark);
+	max-width: 600px;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	animation: slideUp 1s ease-out both;
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+	from {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .contact-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    margin-bottom: 1rem;
-    background: var(--gradient-luxury);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+	font-size: clamp(2.5rem, 5vw, 4rem);
+	font-weight: 800;
+	margin-bottom: 1rem;
+	background: var(--gradient-luxury);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	position: relative;
+	text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .contact-title::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--gradient-luxury);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: blur(15px);
-    opacity: 0.2;
-    z-index: -1;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: var(--gradient-luxury);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	filter: blur(15px);
+	opacity: 0.2;
+	z-index: -1;
 }
 
 .contact-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-gray);
-    margin-bottom: 2.5rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0.9;
+	font-size: 1.2rem;
+	color: var(--text-gray);
+	margin-bottom: 2.5rem;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	opacity: 0.9;
 }
 
 .contact-options {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 }
 
 .contact-option {
-    background: var(--gradient-secondary);
-    border: 2px solid transparent;
-    border-radius: 20px;
-    padding: 2rem;
-    text-decoration: none;
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: all var(--transition-fast);
-    position: relative;
-    overflow: hidden;
+	background: var(--gradient-secondary);
+	border: 2px solid transparent;
+	border-radius: 20px;
+	padding: 2rem;
+	text-decoration: none;
+	color: var(--white);
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	transition: all var(--transition-fast);
+	position: relative;
+	overflow: hidden;
 }
 
 .contact-option::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
-    transition: left 0.6s;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(255, 215, 0, 0.2),
+		transparent
+	);
+	transition: left 0.6s;
 }
 
 .contact-option:hover::before {
-    left: 100%;
+	left: 100%;
 }
 
 .contact-option:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: var(--primary-gold);
-    box-shadow: var(--shadow-gold);
+	transform: translateY(-10px) scale(1.02);
+	border-color: var(--primary-gold);
+	box-shadow: var(--shadow-gold);
 }
 
 .contact-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    flex-shrink: 0;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+	width: 60px;
+	height: 60px;
+	border-radius: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.8rem;
+	flex-shrink: 0;
+	box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 .instagram-icon {
-    background: var(--gradient-luxury);
-    color: var(--black);
+	background: var(--gradient-luxury);
+	color: var(--black);
 }
 
 .email-icon {
-    background: var(--gradient-luxury);
-    color: var(--black);
+	background: var(--gradient-luxury);
+	color: var(--black);
 }
 
 .phone-icon {
-    background: var(--gradient-luxury);
-    color: var(--black);
+	background: var(--gradient-luxury);
+	color: var(--black);
 }
 
 .contact-text {
-    flex: 1;
-    text-align: left;
+	flex: 1;
+	text-align: left;
 }
 
 .contact-label {
-    font-weight: 700;
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-gold);
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+	font-weight: 700;
+	font-size: 1.3rem;
+	margin-bottom: 0.5rem;
+	color: var(--primary-gold);
+	text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .contact-info {
-    color: var(--text-gray);
-    font-size: 1rem;
-    opacity: 0.9;
+	color: var(--text-gray);
+	font-size: 1rem;
+	opacity: 0.9;
 }
 
 @media (max-width: 768px) {
-    .contact-section {
-        padding: 2rem;
-        margin: 1rem;
-    }
-    
-    .contact-option {
-        padding: 1.5rem;
-        gap: 1rem;
-    }
-    
-    .contact-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
+	.contact-section {
+		padding: 2rem;
+		margin: 1rem;
+	}
 
-    .contact-label {
-        font-size: 1.1rem;
-    }
+	.contact-option {
+		padding: 1.5rem;
+		gap: 1rem;
+	}
+
+	.contact-icon {
+		width: 50px;
+		height: 50px;
+		font-size: 1.5rem;
+	}
+
+	.contact-label {
+		font-size: 1.1rem;
+	}
 }
 
 @media (max-width: 480px) {
-    .contact-section {
-        padding: 1.5rem;
-    }
-    
-    .contact-option {
-        padding: 1.2rem;
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
+	.contact-section {
+		padding: 1.5rem;
+	}
 
-    .contact-text {
-        text-align: center;
-    }
-    
-    .contact-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
+	.contact-option {
+		padding: 1.2rem;
+		flex-direction: column;
+		text-align: center;
+		gap: 1rem;
+	}
+
+	.contact-text {
+		text-align: center;
+	}
+
+	.contact-icon {
+		width: 45px;
+		height: 45px;
+		font-size: 1.3rem;
+	}
 }
 
 .pulse-gold {
-    animation: pulseGold 2s ease-in-out infinite;
+	animation: pulseGold 2s ease-in-out infinite;
 }
 
 @keyframes pulseGold {
-    0%, 100% {
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 0 20px rgba(255, 215, 0, 0);
-    }
+	0%,
+	100% {
+		box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+	}
+	50% {
+		box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 0 20px rgba(255, 215, 0, 0);
+	}
 }
 
 /* Shimmer Effect */
-.contact-option:nth-child(1) .contact-icon::before,
+/* .contact-option:nth-child(1) .contact-icon::before,
 .contact-option:nth-child(2) .contact-icon::before,
 .contact-option:nth-child(3) .contact-icon::before {
     content: "";
@@ -1126,9 +1128,4 @@ body {
     0% { left: -100%; }
     50% { left: 100%; }
     100% { left: 100%; }
-}
-
-
-
-
-
+} */
