@@ -1,3 +1,23 @@
+// Wyłączenie hover effects na urządzeniach dotykowych przez CSS
+const disableHoverStyle = document.createElement("style");
+disableHoverStyle.textContent = `
+    @media (hover: none) and (pointer: coarse) {
+        .service-card:hover,
+        .testimonial-card:hover,
+        .stat-card:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .service-card,
+        .testimonial-card,
+        .stat-card {
+            transition: none !important;
+        }
+    }
+`;
+document.head.appendChild(disableHoverStyle);
+
 // Enhanced counter animation
 function animateCounters() {
 	const counters = document.querySelectorAll(".stat-number");
@@ -40,21 +60,28 @@ document.querySelectorAll("section").forEach(section => {
 	observer.observe(section);
 });
 
-// Parallax mouse effect
-document.addEventListener("mousemove", e => {
-	const mouseX = e.clientX / window.innerWidth;
-	const mouseY = e.clientY / window.innerHeight;
+// Parallax mouse effect - tylko na desktopie
+if (
+	!("ontouchstart" in window) &&
+	window.matchMedia("(min-width: 1025px)").matches
+) {
+	document.addEventListener("mousemove", e => {
+		const mouseX = e.clientX / window.innerWidth;
+		const mouseY = e.clientY / window.innerHeight;
 
-	document.querySelectorAll(".geometric-element").forEach((element, index) => {
-		const speed = (index + 1) * 0.3;
-		const x = mouseX * speed * 10;
-		const y = mouseY * speed * 10;
+		document
+			.querySelectorAll(".geometric-element")
+			.forEach((element, index) => {
+				const speed = (index + 1) * 0.3;
+				const x = mouseX * speed * 10;
+				const y = mouseY * speed * 10;
 
-		element.style.transform = `translate(${x}px, ${y}px) rotate(${
-			mouseX * 45
-		}deg)`;
+				element.style.transform = `translate(${x}px, ${y}px) rotate(${
+					mouseX * 45
+				}deg)`;
+			});
 	});
-});
+}
 
 // Smooth scrolling for CTA buttons
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -70,28 +97,73 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 	});
 });
 
-// Enhanced hover effects
-document.querySelectorAll(".testimonial-card, .service-card").forEach(card => {
-	card.addEventListener("mouseenter", function () {
-		this.style.transform = "translateY(-10px) rotate(1deg) scale(1.02)";
-	});
+// Funkcja sprawdzająca czy urządzenie ma możliwość hover
+function hasHoverCapability() {
+	return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
 
-	card.addEventListener("mouseleave", function () {
-		this.style.transform = "translateY(0) rotate(0deg) scale(1)";
-	});
-});
+// Enhanced hover effects - całkowite wyłączenie na urządzeniach dotykowych
+if (hasHoverCapability()) {
+	document
+		.querySelectorAll(".testimonial-card, .service-card, .stat-card")
+		.forEach(card => {
+			card.addEventListener("mouseenter", function () {
+				this.style.transform = "translateY(-10px) rotate(1deg) scale(1.02)";
+				this.style.boxShadow = "0 20px 40px rgba(255, 215, 0, 0.2)";
+			});
 
-// Parallax background effect
-window.addEventListener("scroll", () => {
-	const scrolled = window.pageYOffset;
-	const parallax = document.querySelector(".mesh-background");
-	const speed = scrolled * 0.5;
-	parallax.style.transform = `translateY(${speed}px)`;
-});
+			card.addEventListener("mouseleave", function () {
+				this.style.transform = "translateY(0) rotate(0deg) scale(1)";
+				this.style.boxShadow = "";
+			});
+		});
+}
+
+// Dodatkowe wymuszenie braku hover na urządzeniach dotykowych
+if (!hasHoverCapability()) {
+	document
+		.querySelectorAll(".testimonial-card, .service-card, .stat-card")
+		.forEach(card => {
+			// Usuń wszystkie event listenery hover
+			card.style.transition = "none";
+			card.addEventListener("touchstart", function () {
+				this.style.transform = "none";
+				this.style.boxShadow = "none";
+			});
+
+			// Zablokuj hover states
+			card.addEventListener("mouseenter", function (e) {
+				e.preventDefault();
+				this.style.transform = "none";
+				this.style.boxShadow = "none";
+			});
+
+			card.addEventListener("mouseleave", function (e) {
+				e.preventDefault();
+				this.style.transform = "none";
+				this.style.boxShadow = "none";
+			});
+		});
+}
+
+// Parallax background effect - tylko na desktopie
+if (hasHoverCapability()) {
+	window.addEventListener("scroll", () => {
+		const scrolled = window.pageYOffset;
+		const parallax = document.querySelector(".mesh-background");
+		if (parallax) {
+			const speed = scrolled * 0.5;
+			parallax.style.transform = `translateY(${speed}px)`;
+		}
+	});
+}
 
 // Loading screen
 window.addEventListener("load", () => {
-	document.querySelector(".loading-overlay").style.display = "none";
+	const loadingOverlay = document.querySelector(".loading-overlay");
+	if (loadingOverlay) {
+		loadingOverlay.style.display = "none";
+	}
 });
 
 // Dynamic gradient animation
@@ -104,8 +176,10 @@ setInterval(() => {
 	);
 }, 50);
 
-// Add interactive particles
+// Add interactive particles - tylko na desktopie
 function createParticle() {
+	if (!hasHoverCapability()) return; // Nie tworz cząsteczek na urządzeniach mobilnych
+
 	const particle = document.createElement("div");
 	particle.style.cssText = `
             position: fixed;
@@ -139,20 +213,23 @@ particleStyle.textContent = `
     `;
 document.head.appendChild(particleStyle);
 
-// Create particles periodically
-setInterval(createParticle, 500);
+// Create particles periodically - tylko na desktopie
+if (hasHoverCapability()) {
+	setInterval(createParticle, 500);
+}
 
-// Service cards enhanced interaction
-document.querySelectorAll(".service-card").forEach(card => {
-	card.addEventListener("mouseenter", function () {
-		// Add glow effect
-		this.style.boxShadow = "0 20px 40px rgba(255, 215, 0, 0.2)";
-	});
+// Service cards enhanced interaction - tylko na desktopie
+if (hasHoverCapability()) {
+	document.querySelectorAll(".service-card").forEach(card => {
+		card.addEventListener("mouseenter", function () {
+			// Efekt glow tylko na desktopie (już obsłużone wyżej)
+		});
 
-	card.addEventListener("mouseleave", function () {
-		this.style.boxShadow = "";
+		card.addEventListener("mouseleave", function () {
+			// Efekt glow tylko na desktopie (już obsłużone wyżej)
+		});
 	});
-});
+}
 
 // Animate service icons on scroll
 const serviceObserver = new IntersectionObserver(
@@ -187,36 +264,34 @@ iconPulseStyle.textContent = `
     `;
 document.head.appendChild(iconPulseStyle);
 
+// Animacja wejścia dla opcji kontaktu
+const options = document.querySelectorAll(".contact-option");
+options.forEach((option, index) => {
+	option.style.opacity = "0";
+	option.style.transform = "translateY(30px)";
 
+	setTimeout(() => {
+		option.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+		option.style.opacity = "1";
+		option.style.transform = "translateY(0)";
+	}, index * 200 + 500);
+});
 
+// Efekt świetlny podążający za kursorem - tylko na desktopie
+if (hasHoverCapability()) {
+	document.addEventListener("mousemove", e => {
+		const contactSection = document.querySelector(".contact-section");
+		if (contactSection) {
+			const rect = contactSection.getBoundingClientRect();
+			const x = ((e.clientX - rect.left) / rect.width) * 100;
+			const y = ((e.clientY - rect.top) / rect.height) * 100;
 
- // Animacja wejścia dla opcji kontaktu
- const options = document.querySelectorAll('.contact-option');
- options.forEach((option, index) => {
-     option.style.opacity = '0';
-     option.style.transform = 'translateY(30px)';
-     
-     setTimeout(() => {
-         option.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-         option.style.opacity = '1';
-         option.style.transform = 'translateY(0)';
-     }, index * 200 + 500);
- });
-
- // Efekt świetlny podążający za kursorem
- document.addEventListener('mousemove', (e) => {
-     const contactSection = document.querySelector('.contact-section');
-     const rect = contactSection.getBoundingClientRect();
-     const x = ((e.clientX - rect.left) / rect.width) * 100;
-     const y = ((e.clientY - rect.top) / rect.height) * 100;
-     
-     contactSection.style.background = `
-         radial-gradient(circle at ${x}% ${y}%, 
-             rgba(255, 215, 0, 0.08) 0%, 
-             rgba(255, 215, 0, 0.03) 50%, 
-             rgba(255, 215, 0, 0.01) 100%)
-     `;
- });
-
-
-
+			contactSection.style.background = `
+				radial-gradient(circle at ${x}% ${y}%, 
+					rgba(255, 215, 0, 0.08) 0%, 
+					rgba(255, 215, 0, 0.03) 50%, 
+					rgba(255, 215, 0, 0.01) 100%)
+			`;
+		}
+	});
+}
