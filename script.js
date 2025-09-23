@@ -60,6 +60,24 @@ document.querySelectorAll("section").forEach(section => {
 	observer.observe(section);
 });
 
+// Animacja dla sekcji O mnie
+const aboutObserver = new IntersectionObserver(
+	entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				entry.target.querySelector('.about-image').classList.add('slide-in-left');
+				entry.target.querySelector('.about-text').classList.add('slide-in-right');
+			}
+		});
+	},
+	{ threshold: 0.2 }
+);
+
+const aboutSection = document.querySelector('.about');
+if (aboutSection) {
+	aboutObserver.observe(aboutSection);
+}
+
 // Parallax mouse effect - tylko na desktopie
 if (
 	!("ontouchstart" in window) &&
