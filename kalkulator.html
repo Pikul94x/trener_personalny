@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kalorii - Jakub Pikul | Trener Personalny</title>
+    <link rel="stylesheet" href="kalkulator-style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p>Ładowanie kalkulatora...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">Jakub Pikul</a>
+            <div class="nav-links">
+                <a href="index.html">Strona główna</a>
+                <a href="#kalkulator" class="active">Kalkulator kalorii</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Calculator Section -->
+    <section id="kalkulator" class="calculator-section">
+        <div class="container">
+            <div class="calculator-header">
+                <h1>Kalkulator zapotrzebowania kalorycznego</h1>
+                <p class="subtitle">Oblicz swoje dzienne zapotrzebowanie kaloryczne metodą Mifflin-St Jeor</p>
+            </div>
+
+            <div class="calculator-container">
+                <form id="calculatorForm" class="calculator-form">
+                    <!-- Step 1: Basic Info -->
+                    <div class="form-step active" data-step="1">
+                        <h2>Podstawowe informacje</h2>
+
+                        <div class="form-group">
+                            <label>Płeć</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="male" required>
+                                    <span class="radio-custom"></span>
+                                    <span>Mężczyzna</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="female" required>
+                                    <span class="radio-custom"></span>
+                                    <span>Kobieta</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age">Wiek</label>
+                                <input type="number" id="age" name="age" min="15" max="100" required>
+                                <span class="unit">lat</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight">Waga</label>
+                                <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" required>
+                                <span class="unit">kg</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="height">Wzrost</label>
+                                <input type="number" id="height" name="height" min="100" max="250" required>
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-next" onclick="nextStep()">Dalej</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Activity Level -->
+                    <div class="form-step" data-step="2">
+                        <h2>Poziom aktywności fizycznej</h2>
+
+                        <div class="activity-options">
+                            <label class="activity-card">
+                                <input type="radio" name="activity" value="1.2" required>
+                                <div class="activity-content">
+                                    <h3>Brak aktywności</h3>
+                                    <p>Praca siedząca, brak treningów</p>
+                                    <ul>
+                                        <li>< 5000 kroków dziennie</li>
+                                        <li>Brak regularnych ćwiczeń</li>
+                                        <li>Głównie siedzący tryb życia</li>
+                                    </ul>
+                                </div>
+                            </label>
+
+                            <label class="activity-card">
+                                <input type="radio" name="activity" value="1.375" required>
+                                <div class="activity-content">
+                                    <h3>Niska aktywność</h3>
+                                    <p>Lekkie ćwiczenia 1-3 dni/tydzień</p>
+                                    <ul>
+                                        <li>5000-7500 kroków dziennie</li>
+                                        <li>1-2 treningi tygodniowo</li>
+                                        <li>Praca siedząca z niewielką aktywnością</li>
+                                    </ul>
+                                </div>
+                            </label>
+
+                            <label class="activity-card">
+                                <input type="radio" name="activity" value="1.55" required>
+                                <div class="activity-content">
+                                    <h3>Średnia aktywność</h3>
+                                    <p>Ćwiczenia 3-5 dni/tydzień</p>
+                                    <ul>
+                                        <li>7500-10000 kroków dziennie</li>
+                                        <li>3-4 treningi tygodniowo</li>
+                                        <li>Umiarkowanie aktywna praca</li>
+                                    </ul>
+                                </div>
+                            </label>
+
+                            <label class="activity-card">
+                                <input type="radio" name="activity" value="1.725" required>
+                                <div class="activity-content">
+                                    <h3>Wysoka aktywność</h3>
+                                    <p>Intensywne ćwiczenia 6-7 dni/tydzień</p>
+                                    <ul>
+                                        <li>10000-12500 kroków dziennie</li>
+                                        <li>5-6 treningów tygodniowo</li>
+                                        <li>Aktywna praca fizyczna</li>
+                                    </ul>
+                                </div>
+                            </label>
+
+                            <label class="activity-card">
+                                <input type="radio" name="activity" value="1.9" required>
+                                <div class="activity-content">
+                                    <h3>Bardzo wysoka aktywność</h3>
+                                    <p>Sportowiec, ciężka praca fizyczna</p>
+                                    <ul>
+                                        <li>> 12500 kroków dziennie</li>
+                                        <li>Codzienne intensywne treningi</li>
+                                        <li>Bardzo ciężka praca fizyczna</li>
+                                    </ul>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">Wstecz</button>
+                            <button type="button" class="btn btn-next" onclick="nextStep()">Dalej</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Goal -->
+                    <div class="form-step" data-step="3">
+                        <h2>Jaki jest Twój cel?</h2>
+
+                        <div class="goal-options">
+                            <label class="goal-card">
+                                <input type="radio" name="goal" value="lose-fast" required>
+                                <div class="goal-content">
+                                    <h3>Szybka utrata wagi</h3>
+                                    <p class="deficit">-500 kcal/dzień</p>
+                                    <p>Utrata ~0.5 kg tygodniowo</p>
+                                </div>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="radio" name="goal" value="lose-slow" required>
+                                <div class="goal-content">
+                                    <h3>Wolna utrata wagi</h3>
+                                    <p class="deficit">-250 kcal/dzień</p>
+                                    <p>Utrata ~0.25 kg tygodniowo</p>
+                                </div>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="radio" name="goal" value="maintain" required>
+                                <div class="goal-content">
+                                    <h3>Utrzymanie wagi</h3>
+                                    <p class="maintain">0 kcal</p>
+                                    <p>Bez zmian w wadze</p>
+                                </div>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="radio" name="goal" value="gain-slow" required>
+                                <div class="goal-content">
+                                    <h3>Wolny przyrost masy</h3>
+                                    <p class="surplus">+250 kcal/dzień</p>
+                                    <p>Przyrost ~0.25 kg tygodniowo</p>
+                                </div>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="radio" name="goal" value="gain-fast" required>
+                                <div class="goal-content">
+                                    <h3>Szybki przyrost masy</h3>
+                                    <p class="surplus">+500 kcal/dzień</p>
+                                    <p>Przyrost ~0.5 kg tygodniowo</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">Wstecz</button>
+                            <button type="submit" class="btn btn-calculate">Oblicz zapotrzebowanie</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Results Section -->
+                <div id="results" class="results-container" style="display: none;">
+                    <h2>Twoje zapotrzebowanie kaloryczne</h2>
+
+                    <div class="results-grid">
+                        <div class="result-card main-result">
+                            <h3>Dzienne zapotrzebowanie</h3>
+                            <div class="calorie-value">
+                                <span id="dailyCalories">0</span>
+                                <span class="unit">kcal</span>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>BMR (metabolizm podstawowy)</h3>
+                            <div class="calorie-value secondary">
+                                <span id="bmr">0</span>
+                                <span class="unit">kcal</span>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>TDEE (całkowite zapotrzebowanie)</h3>
+                            <div class="calorie-value secondary">
+                                <span id="tdee">0</span>
+                                <span class="unit">kcal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="macro-breakdown">
+                        <h3>Sugerowany podział makroskładników</h3>
+                        <div class="macro-grid">
+                            <div class="macro-item">
+                                <h4>Białko</h4>
+                                <p><span id="protein">0</span> g</p>
+                                <span class="macro-percent">2g/kg masy ciała</span>
+                            </div>
+                            <div class="macro-item">
+                                <h4>Węglowodany</h4>
+                                <p><span id="carbs">0</span> g</p>
+                                <span class="macro-percent">Reszta kalorii</span>
+                            </div>
+                            <div class="macro-item">
+                                <h4>Tłuszcze</h4>
+                                <p><span id="fats">0</span> g</p>
+                                <span class="macro-percent">30% kalorii</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button type="button" class="btn btn-reset" onclick="resetCalculator()">Oblicz ponownie</button>
+                        <a href="index.html#contact" class="btn btn-primary">Skontaktuj się ze mną</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Jakub Pikul - Trener Personalny</p>
+            <div class="footer-links">
+                <a href="index.html">Strona główna</a>
+                <a href="index.html#services">Usługi</a>
+                <a href="index.html#contact">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="kalkulator-script.js"></script>
+</body>
+</html>
