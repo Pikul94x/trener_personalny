@@ -89,14 +89,25 @@ body {
 }
 
 .nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--gold-primary);
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-img {
+    height: 35px;
+    width: auto;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-logo:hover .logo-img {
+    transform: scale(1.1);
+    opacity: 0.9;
 }
 
 .nav-links {

@@ -1,3 +1,58 @@
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mainNav = document.querySelector('.main-nav');
+
+    // Toggle mobile menu
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+
+    // Add scrolled class to navigation on scroll
+    window.addEventListener('scroll', () => {
+        if (mainNav && window.scrollY > 100) {
+            mainNav.classList.add('scrolled');
+        } else if (mainNav) {
+            mainNav.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            if (this.getAttribute('href') !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+});
+
 // Wyłączenie hover effects na urządzeniach dotykowych przez CSS
 const disableHoverStyle = document.createElement("style");
 disableHoverStyle.textContent = `
@@ -8,7 +63,7 @@ disableHoverStyle.textContent = `
             transform: none !important;
             box-shadow: none !important;
         }
-        
+
         .service-card,
         .testimonial-card,
         .stat-card {
