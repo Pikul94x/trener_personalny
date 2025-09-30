@@ -59,15 +59,25 @@ disableHoverStyle.textContent = `
     @media (hover: none) and (pointer: coarse) {
         .service-card:hover,
         .testimonial-card:hover,
-        .stat-card:hover {
+        .stat-card:hover,
+        .gallery-item:hover {
             transform: none !important;
             box-shadow: none !important;
         }
 
         .service-card,
         .testimonial-card,
-        .stat-card {
+        .stat-card,
+        .gallery-item {
             transition: none !important;
+        }
+
+        .gallery-item:hover img {
+            transform: none !important;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1 !important;
         }
     }
 `;
@@ -132,6 +142,32 @@ const aboutSection = document.querySelector('.about');
 if (aboutSection) {
 	aboutObserver.observe(aboutSection);
 }
+
+// Gallery animation on scroll
+const galleryObserver = new IntersectionObserver(
+	entries => {
+		entries.forEach((entry, index) => {
+			if (entry.isIntersecting) {
+				setTimeout(() => {
+					entry.target.style.opacity = '1';
+					entry.target.style.transform = 'translateY(0)';
+				}, index * 100);
+			}
+		});
+	},
+	{ threshold: 0.1 }
+);
+
+// Apply gallery animations when DOM is loaded
+window.addEventListener('load', () => {
+	const galleryItems = document.querySelectorAll('.gallery-item');
+	galleryItems.forEach(item => {
+		item.style.opacity = '0';
+		item.style.transform = 'translateY(30px)';
+		item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+		galleryObserver.observe(item);
+	});
+});
 
 // Parallax mouse effect - tylko na desktopie
 if (
