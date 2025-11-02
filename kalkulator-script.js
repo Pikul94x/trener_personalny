@@ -127,27 +127,27 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
             break;
     }
 
-    // Calculate macronutrients
-    // Protein: 2g per kg of body weight
-    const protein = Math.round(data.weight * 2);
-    const proteinCalories = protein * 4; // 4 kcal per gram of protein
+    // Calculate macronutrients based on standard percentages
+    // Protein: 25% of daily calories
+    const proteinCalories = dailyCalories * 0.25;
+    const protein = proteinCalories / 4; // 4 kcal per gram of protein
 
-    // Fats: 30% of total calories
+    // Fats: 30% of daily calories
     const fatsCalories = dailyCalories * 0.30;
-    const fats = Math.round(fatsCalories / 9); // 9 kcal per gram of fat
+    const fats = fatsCalories / 9; // 9 kcal per gram of fat
 
-    // Carbs: remaining calories
-    const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
-    const carbs = Math.round(carbsCalories / 4); // 4 kcal per gram of carbs
+    // Carbs: 45% of daily calories
+    const carbsCalories = dailyCalories * 0.45;
+    const carbs = carbsCalories / 4; // 4 kcal per gram of carbs
 
     // Display results
     displayResults({
         bmr: Math.round(bmr),
         tdee: Math.round(tdee),
         dailyCalories: Math.round(dailyCalories),
-        protein: protein,
-        carbs: carbs,
-        fats: fats
+        protein: Math.round(protein),
+        carbs: Math.round(carbs),
+        fats: Math.round(fats)
     });
 });
 
