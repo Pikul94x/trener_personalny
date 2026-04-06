@@ -49,7 +49,6 @@ function validateCurrentStep() {
 
 // Show error message
 function showError(message) {
-    // Create a temporary error message
     const existingError = document.querySelector('.error-message');
     if (existingError) {
         existingError.remove();
@@ -127,18 +126,22 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
             break;
     }
 
-    // Calculate macronutrients based on standard percentages
-    // Protein: 25% of daily calories
-    const proteinCalories = dailyCalories * 0.25;
-    const protein = proteinCalories / 4; // 4 kcal per gram of protein
+    // Calculate macronutrients
+    // Protein: 2g per kg of bodyweight
+    const protein = data.weight * 2;
+    const proteinCalories = protein * 4; // 4 kcal per gram of protein
 
     // Fats: 30% of daily calories
     const fatsCalories = dailyCalories * 0.30;
     const fats = fatsCalories / 9; // 9 kcal per gram of fat
 
-    // Carbs: 45% of daily calories
-    const carbsCalories = dailyCalories * 0.45;
+    // Carbs: remaining calories after protein and fats
+    const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
     const carbs = carbsCalories / 4; // 4 kcal per gram of carbs
+
+    // Calculate actual percentages for display
+    const proteinPercent = Math.round((proteinCalories / dailyCalories) * 100);
+    const carbsPercent = Math.round((carbsCalories / dailyCalories) * 100);
 
     // Display results
     displayResults({
@@ -147,15 +150,20 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
         dailyCalories: Math.round(dailyCalories),
         protein: Math.round(protein),
         carbs: Math.round(carbs),
-        fats: Math.round(fats)
+        fats: Math.round(fats),
+        proteinPercent,
+        carbsPercent
     });
 });
 
 // Display results with animation
 function displayResults(results) {
-    // Hide form and show results
     document.getElementById('calculatorForm').style.display = 'none';
     document.getElementById('results').style.display = 'block';
+
+    // Update percentage labels dynamically
+    document.querySelector('.macro-item:nth-child(1) .macro-percent').textContent = results.proteinPercent + '% kalorii';
+    document.querySelector('.macro-item:nth-child(2) .macro-percent').textContent = results.carbsPercent + '% kalorii';
 
     // Animate numbers
     animateValue('bmr', 0, results.bmr, 1000);
@@ -165,7 +173,6 @@ function displayResults(results) {
     animateValue('carbs', 0, results.carbs, 1000);
     animateValue('fats', 0, results.fats, 1000);
 
-    // Scroll to results
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -173,7 +180,7 @@ function displayResults(results) {
 function animateValue(id, start, end, duration) {
     const element = document.getElementById(id);
     const range = end - start;
-    const increment = range / (duration / 16); // 60 FPS
+    const increment = range / (duration / 16);
     let current = start;
 
     const timer = setInterval(function() {
@@ -189,19 +196,15 @@ function animateValue(id, start, end, duration) {
 
 // Reset calculator
 function resetCalculator() {
-    // Reset form
     document.getElementById('calculatorForm').reset();
 
-    // Reset step
     document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
     currentStep = 1;
     document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
 
-    // Show form and hide results
     document.getElementById('calculatorForm').style.display = 'block';
     document.getElementById('results').style.display = 'none';
 
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -218,7 +221,6 @@ window.addEventListener('load', function() {
 
 // Add input validation
 document.addEventListener('DOMContentLoaded', function() {
-    // Age validation - only on blur to avoid interrupting typing
     const ageInput = document.getElementById('age');
     if (ageInput) {
         ageInput.addEventListener('blur', function() {
@@ -227,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Weight validation - only on blur to avoid interrupting typing
     const weightInput = document.getElementById('weight');
     if (weightInput) {
         weightInput.addEventListener('blur', function() {
@@ -236,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Height validation - only on blur to avoid interrupting typing
     const heightInput = document.getElementById('height');
     if (heightInput) {
         heightInput.addEventListener('blur', function() {
@@ -245,14 +245,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Prevent scroll wheel from changing number inputs
     const numberInputs = document.querySelectorAll('input[type="number"]');
     numberInputs.forEach(input => {
         input.addEventListener('wheel', function(e) {
             e.preventDefault();
         });
 
-        // Prevent up/down arrow keys from changing values
         input.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -260,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add hover effects to cards on desktop
     if (window.innerWidth > 1024) {
         const cards = document.querySelectorAll('.activity-card, .goal-card');
         cards.forEach(card => {
