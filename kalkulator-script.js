@@ -127,17 +127,30 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
     }
 
     // Calculate macronutrients
+<<<<<<< HEAD
     // Protein: 2g per kg of bodyweight
     const protein = data.weight * 2;
+=======
+    // Protein: 2g per kg of body weight
+    const protein = Math.round(data.weight * 2);
+>>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
     const proteinCalories = protein * 4; // 4 kcal per gram of protein
 
     // Fats: 30% of daily calories
+    // Fats: 30% of total calories
     const fatsCalories = dailyCalories * 0.30;
     const fats = fatsCalories / 9; // 9 kcal per gram of fat
+    const fats = Math.round(fatsCalories / 9); // 9 kcal per gram of fat
 
+<<<<<<< HEAD
     // Carbs: remaining calories after protein and fats
     const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
     const carbs = carbsCalories / 4; // 4 kcal per gram of carbs
+=======
+    // Carbs: remaining calories
+    const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
+    const carbs = Math.round(carbsCalories / 4); // 4 kcal per gram of carbs
+>>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
 
     // Calculate actual percentages for display
     const proteinPercent = Math.round((proteinCalories / dailyCalories) * 100);
@@ -148,11 +161,17 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
         bmr: Math.round(bmr),
         tdee: Math.round(tdee),
         dailyCalories: Math.round(dailyCalories),
+<<<<<<< HEAD
         protein: Math.round(protein),
         carbs: Math.round(carbs),
         fats: Math.round(fats),
         proteinPercent,
         carbsPercent
+=======
+        protein: protein,
+        carbs: carbs,
+        fats: fats
+>>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
     });
 });
 
