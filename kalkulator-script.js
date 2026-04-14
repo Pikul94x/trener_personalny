@@ -136,10 +136,8 @@ document.getElementById('calculatorForm').addEventListener('submit', function(e)
 >>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
     const proteinCalories = protein * 4; // 4 kcal per gram of protein
 
-    // Fats: 30% of daily calories
     // Fats: 30% of total calories
     const fatsCalories = dailyCalories * 0.30;
-    const fats = fatsCalories / 9; // 9 kcal per gram of fat
     const fats = Math.round(fatsCalories / 9); // 9 kcal per gram of fat
 
 <<<<<<< HEAD
