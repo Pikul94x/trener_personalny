@@ -76,103 +76,6 @@ function showError(message) {
     }, 3000);
 }
 
-// Calculator form submission
-document.getElementById('calculatorForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    if (!validateCurrentStep()) {
-        return;
-    }
-
-    // Get form values
-    const formData = new FormData(this);
-    const data = {
-        gender: formData.get('gender'),
-        age: parseInt(formData.get('age')),
-        weight: parseFloat(formData.get('weight')),
-        height: parseInt(formData.get('height')),
-        activity: parseFloat(formData.get('activity')),
-        goal: formData.get('goal')
-    };
-
-    // Calculate BMR using Mifflin-St Jeor equation
-    let bmr;
-    if (data.gender === 'male') {
-        bmr = (10 * data.weight) + (6.25 * data.height) - (5 * data.age) + 5;
-    } else {
-        bmr = (10 * data.weight) + (6.25 * data.height) - (5 * data.age) - 161;
-    }
-
-    // Calculate TDEE (Total Daily Energy Expenditure)
-    const tdee = bmr * data.activity;
-
-    // Calculate daily calories based on goal
-    let dailyCalories = tdee;
-    switch(data.goal) {
-        case 'lose-fast':
-            dailyCalories = tdee - 500;
-            break;
-        case 'lose-slow':
-            dailyCalories = tdee - 250;
-            break;
-        case 'maintain':
-            dailyCalories = tdee;
-            break;
-        case 'gain-slow':
-            dailyCalories = tdee + 250;
-            break;
-        case 'gain-fast':
-            dailyCalories = tdee + 500;
-            break;
-    }
-
-    // Calculate macronutrients
-<<<<<<< HEAD
-    // Protein: 2g per kg of bodyweight
-    const protein = data.weight * 2;
-=======
-    // Protein: 2g per kg of body weight
-    const protein = Math.round(data.weight * 2);
->>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
-    const proteinCalories = protein * 4; // 4 kcal per gram of protein
-
-    // Fats: 30% of total calories
-    const fatsCalories = dailyCalories * 0.30;
-    const fats = Math.round(fatsCalories / 9); // 9 kcal per gram of fat
-
-<<<<<<< HEAD
-    // Carbs: remaining calories after protein and fats
-    const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
-    const carbs = carbsCalories / 4; // 4 kcal per gram of carbs
-=======
-    // Carbs: remaining calories
-    const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
-    const carbs = Math.round(carbsCalories / 4); // 4 kcal per gram of carbs
->>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
-
-    // Calculate actual percentages for display
-    const proteinPercent = Math.round((proteinCalories / dailyCalories) * 100);
-    const carbsPercent = Math.round((carbsCalories / dailyCalories) * 100);
-
-    // Display results
-    displayResults({
-        bmr: Math.round(bmr),
-        tdee: Math.round(tdee),
-        dailyCalories: Math.round(dailyCalories),
-<<<<<<< HEAD
-        protein: Math.round(protein),
-        carbs: Math.round(carbs),
-        fats: Math.round(fats),
-        proteinPercent,
-        carbsPercent
-=======
-        protein: protein,
-        carbs: carbs,
-        fats: fats
->>>>>>> parent of e70c4cf (poprawione liczenie makro kalkulatora / zmiana na przeliczanie procentowe)
-    });
-});
-
 // Display results with animation
 function displayResults(results) {
     document.getElementById('calculatorForm').style.display = 'none';
@@ -229,15 +132,102 @@ function resetCalculator() {
 window.addEventListener('load', function() {
     setTimeout(function() {
         const loader = document.getElementById('loader');
-        loader.classList.add('fade-out');
-        setTimeout(function() {
-            loader.style.display = 'none';
-        }, 500);
+        if (loader) {
+            loader.classList.add('fade-out');
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
+        }
     }, 500);
 });
 
-// Add input validation
+// Wszystko, co odwołuje się do elementów formularza, czekamy aż DOM będzie gotowy
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Calculator form submission
+    const calculatorForm = document.getElementById('calculatorForm');
+    if (calculatorForm) {
+        calculatorForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!validateCurrentStep()) {
+                return;
+            }
+
+            // Get form values
+            const formData = new FormData(this);
+            const data = {
+                gender: formData.get('gender'),
+                age: parseInt(formData.get('age')),
+                weight: parseFloat(formData.get('weight')),
+                height: parseInt(formData.get('height')),
+                activity: parseFloat(formData.get('activity')),
+                goal: formData.get('goal')
+            };
+
+            // Calculate BMR using Mifflin-St Jeor equation
+            let bmr;
+            if (data.gender === 'male') {
+                bmr = (10 * data.weight) + (6.25 * data.height) - (5 * data.age) + 5;
+            } else {
+                bmr = (10 * data.weight) + (6.25 * data.height) - (5 * data.age) - 161;
+            }
+
+            // Calculate TDEE (Total Daily Energy Expenditure)
+            const tdee = bmr * data.activity;
+
+            // Calculate daily calories based on goal
+            let dailyCalories = tdee;
+            switch (data.goal) {
+                case 'lose-fast':
+                    dailyCalories = tdee - 500;
+                    break;
+                case 'lose-slow':
+                    dailyCalories = tdee - 250;
+                    break;
+                case 'maintain':
+                    dailyCalories = tdee;
+                    break;
+                case 'gain-slow':
+                    dailyCalories = tdee + 250;
+                    break;
+                case 'gain-fast':
+                    dailyCalories = tdee + 500;
+                    break;
+            }
+
+            // Calculate macronutrients
+            // Protein: 2g per kg of body weight
+            const protein = Math.round(data.weight * 2);
+            const proteinCalories = protein * 4; // 4 kcal per gram of protein
+
+            // Fats: 30% of total calories
+            const fatsCalories = dailyCalories * 0.30;
+            const fats = Math.round(fatsCalories / 9); // 9 kcal per gram of fat
+
+            // Carbs: remaining calories
+            const carbsCalories = dailyCalories - proteinCalories - fatsCalories;
+            const carbs = Math.round(carbsCalories / 4); // 4 kcal per gram of carbs
+
+            // Calculate actual percentages for display
+            const proteinPercent = Math.round((proteinCalories / dailyCalories) * 100);
+            const carbsPercent = Math.round((carbsCalories / dailyCalories) * 100);
+
+            // Display results
+            displayResults({
+                bmr: Math.round(bmr),
+                tdee: Math.round(tdee),
+                dailyCalories: Math.round(dailyCalories),
+                protein: protein,
+                carbs: carbs,
+                fats: fats,
+                proteinPercent: proteinPercent,
+                carbsPercent: carbsPercent
+            });
+        });
+    }
+
+    // Add input validation
     const ageInput = document.getElementById('age');
     if (ageInput) {
         ageInput.addEventListener('blur', function() {
