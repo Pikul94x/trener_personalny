@@ -1439,6 +1439,11 @@ body {
 	color: var(--black);
 }
 
+.booksy-icon {
+	background: var(--gradient-luxury);
+	color: var(--black);
+}
+
 .contact-text {
 	flex: 1;
 	text-align: left;
